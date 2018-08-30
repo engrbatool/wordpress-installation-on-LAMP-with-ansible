@@ -1,0 +1,35 @@
+- name: wordpress | make a directory for wordpress
+  raw: "mkdir /var/www/html/wordpress -p"
+
+
+  #######################################################################
+
+- name: wordpress | downlaod and unarcheive wordpress package in above directory
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html
+    remote_src: yes
+
+
+    #######################################################################
+- name: wordpress | change ownership on directory
+  raw: "chown -R www-data:www-data /var/www/html/wordpress/"
+
+
+  ################################################33
+- name: wordpress |change permission
+  raw: "chmod -R 755 /var/www/html/wordpress/"
+
+
+  ###############################################
+- name: wordpress | move file
+  template:
+          src: "templates/wp-config.php"
+          dest: "/var/www/html/wordpress/wp-config.php"
+
+
+
+
+
+
+

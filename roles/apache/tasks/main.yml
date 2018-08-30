@@ -1,0 +1,21 @@
+- name: apache2 | Install apache2
+  package: name=apache2  state=present
+
+
+
+- name: apache2 |move new configuration file called wordpress.conf from apache2 templates
+  template:
+        src: "templates/wordpress.conf"
+        dest: "/etc/apache2/sites-available/wordpress.conf"
+
+
+
+- name: apache2 | disable PHP7.0 and enable PHP 7.1 for Apache2.
+  raw: "a2ensite wordpress.conf"
+
+- name: apache | enable apache for rewrite mode
+  raw: "a2enmod rewrite"
+  notify:
+          - restart apache2
+  
+

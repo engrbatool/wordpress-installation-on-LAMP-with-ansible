@@ -1,0 +1,38 @@
+---
+- name: php | Install php  name=software-properties-common
+  package: name=software-properties-common state=present
+
+
+###############################
+
+- name: php |add php repo
+  apt_repository:
+          repo: ppa:ondrej/php
+          state: present
+
+
+- name: php| update repo cache
+  apt:
+          update_cache: yes
+
+- name: php | install php packages
+  package: name={{ item }}
+  state: present
+  with_items:
+          - php7.1
+          - libapache2-mod-php7.1
+          - php7.1-common
+          - php7.1-mbstring
+          - php7.1-xmlrpc
+          - php7.1-gd
+          - php7.1-xml
+          - php7.1-mysql
+          - php7.1-cli
+          - php7.1-mcrypt
+          - php7.1-zip
+          - php7.1-curl
+- name: mv file php from template to target
+  template:
+          src: "templates/php.ini"
+          dest: "/etc/php/7.1/apache2/php.ini"
+
